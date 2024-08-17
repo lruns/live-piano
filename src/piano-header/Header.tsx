@@ -1,16 +1,35 @@
 import "./Header.css"
+import "../sampler.ts";
+import {useState} from "react";
+import {changeVolume} from "../sampler.ts";
 
 const Header = () => {
+    const [volume, setVolume] = useState(0);
+
+    const handleVolumeChange = (event) => {
+        const newVolume = event.target.value;
+        setVolume(newVolume);
+        changeVolume(newVolume)
+    };
+
     return (
         <div className="header">
-            <h2>Playable piano</h2>
+            <h2>Live Piano</h2>
             <div>
                 <label htmlFor="volume">Volume</label>
-                <input className="slider" type="range" id="volume" name="volume" min="0" max="100"/>
+                <input
+                    type="range"
+                    min="-20"
+                    max="20"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="slider"
+                    id="volume"
+                    name="volume"/>
             </div>
             <label>
                 Show keys
-                <input className="checkbox" type="checkbox" name="piano-keys"/>
+                <input disabled checked className="checkbox" type="checkbox" name="piano-keys"/>
             </label>
         </div>
     )

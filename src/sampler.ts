@@ -37,4 +37,8 @@ const sampler = new Tone.Sampler({
     baseUrl: "https://tonejs.github.io/audio/salamander/",
 }).toDestination();
 
+export const changeVolume = (newVolume: number) => {
+    sampler.volume.value = newVolume
+};
+
 export default sampler;

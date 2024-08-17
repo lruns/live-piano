@@ -33,38 +33,43 @@ const Keynote: FC<KeynoteProps> = ({note, keyHint, keyCode, color}) => {
 
     const [isPlaying, setPlaying] = useState(false);
 
-    const handleDown = useCallback(() => {
+    const play = useCallback(() => {
         if (!isPlaying) {
             sampler.triggerAttack(note);
             setPlaying(true)
         }
     }, [isPlaying, note]);
 
-    const handleUp = useCallback(() => {
+    const stop = useCallback(() => {
         sampler.triggerRelease(note);
         setPlaying(false)
     }, [note]);
 
+    const handleClick = e => {
+        stop();
+        play();
+    }
+
     const handleClickedMouseEntered = e => {
         if (e.buttons > 0) {
-            handleDown();
+            play();
         }
     };
 
     const handleClickedMouseLeave = e => {
-        handleUp();
+        stop();
     };
 
     useEffect(() => {
         const handleKeyDown = e => {
             if (e.code === keyCode) {
-                handleDown();
+                play();
             }
         };
 
         const handleKeyUp = e => {
             if (e.code === keyCode) {
-                handleUp();
+                stop();
             }
         };
 
@@ -76,12 +81,12 @@ const Keynote: FC<KeynoteProps> = ({note, keyHint, keyCode, color}) => {
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('keyup', handleKeyUp);
         }
-    }, [handleDown, handleUp, keyCode]);
+    }, [play, stop, keyCode]);
 
     const classes = [color, isPlaying ? 'pressed' : '']
 
     return (
-        <div onMouseDown={handleDown} onMouseEnter={handleClickedMouseEntered} onMouseLeave={handleClickedMouseLeave} className={classes.join(" ")}>
+        <div onMouseDown={handleClick} onMouseEnter={handleClickedMouseEntered} onMouseLeave={handleClickedMouseLeave} className={classes.join(" ")}>
             <span>{keyHint}</span>
         </div>
     );
