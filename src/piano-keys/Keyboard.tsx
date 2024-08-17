@@ -45,29 +45,31 @@ const Keynote: FC<KeynoteProps> = ({note, keyHint, keyCode, color}) => {
         setPlaying(false)
     }, [note]);
 
-    const handleClick = e => {
+    const handleClick = () => {
         stop();
         play();
     }
 
-    const handleClickedMouseEntered = e => {
+
+    // @ts-ignore
+    const handleClickedMouseEntered = (e) => {
         if (e.buttons > 0) {
             play();
         }
     };
 
-    const handleClickedMouseLeave = e => {
+    const handleClickedMouseLeave = () => {
         stop();
     };
 
     useEffect(() => {
-        const handleKeyDown = e => {
+        const handleKeyDown = (e: KeyboardEvent)=> {
             if (e.code === keyCode) {
                 play();
             }
         };
 
-        const handleKeyUp = e => {
+        const handleKeyUp = (e: KeyboardEvent)=> {
             if (e.code === keyCode) {
                 stop();
             }

@@ -1,13 +1,13 @@
 import "./Header.css"
 import "../sampler.ts";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {changeVolume} from "../sampler.ts";
 
 const Header = () => {
     const [volume, setVolume] = useState(0);
 
-    const handleVolumeChange = (event) => {
-        const newVolume = event.target.value;
+    const handleVolumeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newVolume = Number(event.target.value);
         setVolume(newVolume);
         changeVolume(newVolume)
     };
