@@ -48,7 +48,9 @@ const Keynote: FC<KeynoteProps & SimpleShowKeys> = ({note, keyHint, keyCode, col
         setPlaying(false)
     }, [note]);
 
-    const handleClick = () => {
+    // @ts-ignore
+    const handleClick = (e) => {
+        e.preventDefault()
         stop();
         play();
     }
@@ -56,23 +58,27 @@ const Keynote: FC<KeynoteProps & SimpleShowKeys> = ({note, keyHint, keyCode, col
 
     // @ts-ignore
     const handleClickedMouseEntered = (e) => {
+        e.preventDefault()
         if (e.buttons > 0) {
             play();
         }
     };
 
-    const handleClickedMouseLeave = () => {
+    // @ts-ignore
+    const handleClickLeave = (e) => {
+        e.preventDefault()
         stop();
     };
 
+
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent)=> {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.code === keyCode) {
                 play();
             }
         };
 
-        const handleKeyUp = (e: KeyboardEvent)=> {
+        const handleKeyUp = (e: KeyboardEvent) => {
             if (e.code === keyCode) {
                 stop();
             }
@@ -91,7 +97,12 @@ const Keynote: FC<KeynoteProps & SimpleShowKeys> = ({note, keyHint, keyCode, col
     const classes = [color, isPlaying ? 'pressed' : '']
 
     return (
-        <div onMouseDown={handleClick} onMouseEnter={handleClickedMouseEntered} onMouseLeave={handleClickedMouseLeave} className={classes.join(" ")}>
+        <div onMouseDown={handleClick}
+             onMouseEnter={handleClickedMouseEntered}
+             onMouseLeave={handleClickLeave}
+             onTouchStart={handleClick}
+             onTouchEnd={handleClickLeave}
+             className={classes.join(" ")}>
             {isShowKeys && <span>{keyHint}</span>}
         </div>
     );
