@@ -1,6 +1,7 @@
 import "./Keyboard.css"
 import sampler from "../sampler.ts";
 import {FC, useCallback, useEffect, useState} from "react";
+import {ShowKeysType} from "../App.tsx";
 
 type KeynoteProps = {
     note: string,
@@ -8,6 +9,8 @@ type KeynoteProps = {
     keyCode: string,
     color: string
 }
+
+type SimpleShowKeys = Pick<ShowKeysType, "isShowKeys">;
 
 const AllKeynoteProps: Array<KeynoteProps> = [
     {note: "C4", keyHint: "A", keyCode: "KeyA", color: "white"},
@@ -29,7 +32,7 @@ const AllKeynoteProps: Array<KeynoteProps> = [
     {note: "E5", keyHint: ";", keyCode: "Semicolon", color: "white"},
 ]
 
-const Keynote: FC<KeynoteProps> = ({note, keyHint, keyCode, color}) => {
+const Keynote: FC<KeynoteProps & SimpleShowKeys> = ({note, keyHint, keyCode, color, isShowKeys}) => {
 
     const [isPlaying, setPlaying] = useState(false);
 
@@ -89,17 +92,16 @@ const Keynote: FC<KeynoteProps> = ({note, keyHint, keyCode, color}) => {
 
     return (
         <div onMouseDown={handleClick} onMouseEnter={handleClickedMouseEntered} onMouseLeave={handleClickedMouseLeave} className={classes.join(" ")}>
-            <span>{keyHint}</span>
+            {isShowKeys && <span>{keyHint}</span>}
         </div>
     );
 };
 
-
-const Keyboard = () => {
+const Keyboard: FC<SimpleShowKeys> = ({isShowKeys}) => {
     return (
         <div className="piano-keys">
             {AllKeynoteProps.map((props) => (
-                <Keynote {...props}/>
+                <Keynote {...props} isShowKeys={isShowKeys}/>
             ))}
         </div>
     );
