@@ -1,5 +1,10 @@
 * {
   font-family: cursive;
+  overflow: hidden;
+}
+
+html {
+  font-size: 18px;
 }
 
 .container {
@@ -12,10 +17,31 @@
 }
 
 .piano {
-  max-width: 1000px;
+  width: 100%;
+  max-width: 770px;
   align-content: center;
   color: #d6d6d6;
   border-radius: 10px;
   background-color: #000000;
   padding: 20px;
+}
+
+@media (max-width: 550px) {
+  html {
+    font-size: 15px;
+  }
+
+  .piano {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  html {
+    font-size: 12px;
+  }
+
+  .piano {
+    padding: 5px;
+  }
 }

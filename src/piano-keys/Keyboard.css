@@ -1,10 +1,12 @@
 .piano-keys {
+    font-size: 1.2em;
     display: flex;
     flex-wrap: wrap;
     user-select: none;
 }
 
 .piano-keys > div {
+    flex: 1;
     border: 1px solid black;
     position: relative;
     border-radius: 10px;
@@ -24,17 +26,18 @@
 
 .piano-keys .white {
     height: 300px;
-    width: 76px;
+
     background-color: white;
     color: #000000;
 }
 
 .piano-keys .black {
+    flex: 0.5;
+
     height: 163px;
-    width: 47px;
 
     z-index: 2;
-    margin: 0 -25px;
+    margin: 0 -1em;
 
     background-color: black;
     color: white;
@@ -45,9 +48,27 @@
     transform: scale(1.02);
 }
 
-
 .piano-keys .black.pressed {
     background-color: #303030;
     transform: scale(1.05);
 }
 
+@media (max-width: 550px) {
+    .piano-keys .white {
+        height: 200px;
+    }
+
+    .piano-keys .black {
+        height: 121px;
+    }
+}
+
+@media (max-width: 400px) {
+    .piano-keys .white {
+        height: 150px;
+    }
+
+    .piano-keys .black {
+        height: 81px;
+    }
+}
